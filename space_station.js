@@ -19,23 +19,23 @@
 
 
 // call an api to get json formatted data and set marker
-    const api_url = 'http://api.open-notify.org/iss-now.json';
+    //const api_url = 'http://api.open-notify.org/iss-now.json';
+    const api_url = 'https://api.wheretheiss.at/v1/satellites/25544';
     let firstTime = true;
      async function getISS() {
         const response =  await fetch(api_url);
         const data =  await response.json();
-        const {latitude,longitude} = data.iss_position;
         console.log(data);
-        document.getElementById("lat").textContent = latitude;
-        document.getElementById("lng").textContent = longitude;
+        document.getElementById("lat").textContent = data.latitude.toFixed(2);
+        document.getElementById("lng").textContent = data.longitude.toFixed(2);
 
 
         // set the marker to a specific location as per api
-        marker.setLatLng([latitude,longitude]);
+        marker.setLatLng([data.latitude,data.longitude]);
     
         //initially  loading time view this loaction in center
         if (firstTime){
-         mymap.setView([latitude,longitude], 2); 
+         mymap.setView([data.latitude,data.longitude], 2); 
          firstTime = false;
         }
     }
